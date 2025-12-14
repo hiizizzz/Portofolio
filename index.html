@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdul Aziz | Portfolio</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts - Space Grotesk & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'space': ['Space Grotesk', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: {
+                            900: '#0a0a0f',
+                            800: '#12121a',
+                            700: '#1a1a25',
+                            600: '#252532',
+                        },
+                        accent: {
+                            primary: '#6366f1',
+                            secondary: '#8b5cf6',
+                            glow: '#818cf8',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'slide-up': 'slideUp 0.6s ease-out forwards',
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0f;
+            color: #e5e7eb;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #12121a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #6366f1, #8b5cf6);
+            border-radius: 4px;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+            to { box-shadow: 0 0 40px rgba(139, 92, 246, 0.5); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(60px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(26, 26, 37, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+        
+        /* Glow Border */
+        .glow-border {
+            position: relative;
+        }
+        
+        .glow-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #6366f1);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .glow-border:hover::before {
+            opacity: 1;
+        }
+        
+        /* Timeline */
+        .timeline-item {
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 28px;
+            width: 2px;
+            height: calc(100% - 20px);
+            background: linear-gradient(180deg, #6366f1, transparent);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        /* Skill Bar */
+        .skill-progress {
+            position: relative;
+            height: 6px;
+            background: #252532;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .skill-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            border-radius: 3px;
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 1s ease-out;
+        }
+        
+        .skill-progress-bar.animate {
+            transform: scaleX(1);
+        }
+        
+        /* Floating Shapes */
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        /* Nav Active State */
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.17, 0.55, 0.55, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Bento Grid Item Hover */
+        .bento-item {
+            transition: all 0.4s cubic-bezier(0.17, 0.55, 0.55, 1);
+        }
+        
+        .bento-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+        }
+        
+        /* Icon Container */
+        .icon-container {
+            background: transparent;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .icon-container:hover {
+            border-color: rgba(99, 102, 241, 0.6);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Floating Shapes -->
+    <div class="floating-shape w-96 h-96 bg-accent-primary top-20 -left-48" style="animation: float 8s ease-in-out infinite;"></div>
+    <div class="floating-shape w-80 h-80 bg-accent-secondary top-1/2 -right-40" style="animation: float 10s ease-in-out infinite 2s;"></div>
+    <div class="floating-shape w-64 h-64 bg-purple-600 bottom-20 left-1/4" style="animation: float 12s ease-in-out infinite 4s;"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="#" class="text-2xl font-space font-bold gradient-text">Abdul Aziz</a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="nav-link text-sm font-medium text-gray-300 hover:text-white transition-colors">Beranda</a>
+                    <a href="#about" class="nav-link text-sm font-medium text-gray-300 hover:text-white transition-colors">Tentang</a>
+                    <a href="#experience" class="nav-link text-sm font-medium text-gray-300 hover:text-white transition-colors">Pengalaman</a>
+                    <a href="#skills" class="nav-link text-sm font-medium text-gray-300 hover:text-white transition-colors">Keahlian</a>
+                    <a href="#organization" class="nav-link text-sm font-medium text-gray-300 hover:text-white transition-colors">Organisasi</a>
+                    <a href="#contact" class="nav-link text-sm font-medium text-gray-300 hover:text-white transition-colors">Kontak</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-white" id="menuBtn">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed top-0 right-0 bottom-0 w-72 bg-dark-800 z-50 p-8" id="mobileMenu">
+        <button class="absolute top-6 right-6 text-white" id="closeMenuBtn">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <div class="flex flex-col gap-6 mt-16">
+            <a href="#home" class="text-lg font-medium text-gray-300 hover:text-white transition-colors mobile-link">Beranda</a>
+            <a href="#about" class="text-lg font-medium text-gray-300 hover:text-white transition-colors mobile-link">Tentang</a>
+            <a href="#experience" class="text-lg font-medium text-gray-300 hover:text-white transition-colors mobile-link">Pengalaman</a>
+            <a href="#skills" class="text-lg font-medium text-gray-300 hover:text-white transition-colors mobile-link">Keahlian</a>
+            <a href="#organization" class="text-lg font-medium text-gray-300 hover:text-white transition-colors mobile-link">Organisasi</a>
+            <a href="#contact" class="text-lg font-medium text-gray-300 hover:text-white transition-colors mobile-link">Kontak</a>
+        </div>
+    </div>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="fixed inset-0 bg-black/50 z-40 hidden" id="menuOverlay"></div>
+    
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <div class="max-w-7xl mx-auto px-6 py-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full">
+                        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                        <span class="text-sm text-gray-400">Available for opportunities</span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-7xl font-space font-bold leading-tight">
+                        Hi, Saya<br>
+                        <span class="gradient-text">Abdul Aziz</span>
+                    </h1>
+                    
+                    <p class="text-xl text-gray-400 leading-relaxed max-w-lg">
+                        Profesional muda dengan pengalaman lintas bidang di <span class="text-accent-glow">manajemen</span>, <span class="text-accent-glow">SDM</span>, dan <span class="text-accent-glow">teknisi HVAC</span>.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#contact" class="group inline-flex items-center gap-2 bg-gradient-to-r from-accent-primary to-accent-secondary px-8 py-4 rounded-full font-semibold text-white transition-all hover:shadow-lg hover:shadow-accent-primary/30">
+                            Hubungi Saya
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#experience" class="inline-flex items-center gap-2 glass px-8 py-4 rounded-full font-semibold text-white hover:bg-dark-600 transition-all">
+                            <i data-lucide="briefcase" class="w-5 h-5"></i>
+                            Lihat Pengalaman
+                        </a>
+                    </div>
+                    
+                    <div class="flex items-center gap-6 pt-4">
+                        <a href="mailto:azeiz1820@gmail.com" class="w-12 h-12 glass rounded-full flex items-center justify-center text-gray-400 hover:text-accent-glow hover:border-accent-primary transition-all">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </a>
+                        <a href="tel:+6287777591707" class="w-12 h-12 glass rounded-full flex items-center justify-center text-gray-400 hover:text-accent-glow hover:border-accent-primary transition-all">
+                            <i data-lucide="phone" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 glass rounded-full flex items-center justify-center text-gray-400 hover:text-accent-glow hover:border-accent-primary transition-all">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Hero Visual -->
+                <div class="relative hidden lg:block">
+                    <div class="relative w-96 h-96 mx-auto">
+                        <!-- Animated Rings -->
+                        <div class="absolute inset-0 border-2 border-accent-primary/20 rounded-full animate-pulse"></div>
+                        <div class="absolute inset-4 border-2 border-accent-secondary/20 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
+                        <div class="absolute inset-8 border-2 border-purple-500/20 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+                        
+                        <!-- Profile Image -->
+                        <div class="absolute inset-8 rounded-full overflow-hidden border-4 border-accent-primary/30" style="animation: glow 3s ease-in-out infinite alternate; background: transparent;">
+                            <img src="bang_aziz.jpg" alt="Abdul Aziz" class="w-full h-full" >
+                        </div>
+                        
+                        <!-- Floating Elements -->
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 glass px-4 py-2 rounded-full" style="animation: float 4s ease-in-out infinite;">
+                            <span class="text-sm text-accent-glow">Store Manager</span>
+                        </div>
+                        <div class="absolute top-1/2 -right-8 -translate-y-1/2 glass px-4 py-2 rounded-full" style="animation: float 5s ease-in-out infinite 1s;">
+                            <span class="text-sm text-accent-glow">HR GA</span>
+                        </div>
+                        <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 glass px-4 py-2 rounded-full" style="animation: float 4.5s ease-in-out infinite 0.5s;">
+                            <span class="text-sm text-accent-glow">HVAC Tech</span>
+                        </div>
+                        <div class="absolute top-1/2 -left-8 -translate-y-1/2 glass px-4 py-2 rounded-full" style="animation: float 5.5s ease-in-out infinite 1.5s;">
+                            <span class="text-sm text-accent-glow">Gen Affairs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+            <span class="text-sm text-gray-500">Scroll</span>
+            <div class="w-6 h-10 border-2 border-gray-600 rounded-full flex justify-center pt-2">
+                <div class="w-1 h-3 bg-accent-glow rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal">
+                <span class="text-accent-glow font-space text-sm tracking-widest uppercase">Tentang Saya</span>
+                <h2 class="text-4xl md:text-5xl font-space font-bold mt-4 mb-16">
+                    Mengenal <span class="gradient-text">Abdul Aziz</span>
+                </h2>
+            </div>
+            
+            <!-- Bento Grid -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Main About -->
+                <div class="md:col-span-2 bento-item glass rounded-3xl p-8 reveal">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="w-14 h-14 icon-container rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="user" class="w-7 h-7 text-accent-glow"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-space font-semibold mb-2">Profil</h3>
+                            <p class="text-gray-400 leading-relaxed">
+                                Profesional muda berpengalaman lintas bidang (manajemen toko, teknisi HVAC, HR, general affair). Mahasiswa aktif S1 Administrasi Bisnis dengan minat ekspor-impor, SDM, kepemimpinan, dan implementasi organisasi. Komitmen tinggi pada integritas, tanggung jawab, belajar berkelanjutan, dan memberikan yang terbaik untuk diri serta perusahaan.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-3 mt-6">
+                        <span class="px-4 py-2 bg-dark-700 rounded-full text-sm text-gray-300">Integritas</span>
+                        <span class="px-4 py-2 bg-dark-700 rounded-full text-sm text-gray-300">Tanggung Jawab</span>
+                        <span class="px-4 py-2 bg-dark-700 rounded-full text-sm text-gray-300">Continuous Learning</span>
+                        <span class="px-4 py-2 bg-dark-700 rounded-full text-sm text-gray-300">Excellence</span>
+                    </div>
+                </div>
+                
+                <!-- Location -->
+                <div class="bento-item glass rounded-3xl p-8 reveal" style="transition-delay: 0.1s;">
+                    <div class="w-14 h-14 icon-container rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="map-pin" class="w-7 h-7 text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-space font-semibold mb-2">Lokasi</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Jl. Raya Kadugung - Cileles, KM. 29, Rangkasbitung, 42361
+                    </p>
+                </div>
+                
+                <!-- Education 1 -->
+                <div class="bento-item glass rounded-3xl p-8 reveal" style="transition-delay: 0.2s;">
+                    <div class="w-14 h-14 icon-container rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="graduation-cap" class="w-7 h-7 text-blue-400"></i>
+                    </div>
+                    <span class="text-accent-glow text-sm">2021 - 2025</span>
+                    <h3 class="text-xl font-space font-semibold mt-2 mb-2">S1 Administrasi Bisnis</h3>
+                    <p class="text-gray-400 text-sm">International Women University</p>
+                </div>
+                
+                <!-- Education 2 -->
+                <div class="bento-item glass rounded-3xl p-8 reveal" style="transition-delay: 0.3s;">
+                    <div class="w-14 h-14 icon-container rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="book-open" class="w-7 h-7 text-orange-400"></i>
+                    </div>
+                    <span class="text-accent-glow text-sm">2016 - 2019</span>
+                    <h3 class="text-xl font-space font-semibold mt-2 mb-2">SMA N 1 Cikulur</h3>
+                    <p class="text-gray-400 text-sm">Jurusan Ilmu Pengetahuan Alam (Fisika)</p>
+                </div>
+                
+                <!-- Hobbies -->
+                <div class="bento-item glass rounded-3xl p-8 reveal" style="transition-delay: 0.4s;">
+                    <div class="w-14 h-14 icon-container rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="heart" class="w-7 h-7 text-pink-400"></i>
+                    </div>
+                    <h3 class="text-xl font-space font-semibold mb-4">Minat & Hobi</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-dark-700 rounded-full text-xs text-gray-300">Silat</span>
+                        <span class="px-3 py-1 bg-dark-700 rounded-full text-xs text-gray-300">Seni</span>
+                        <span class="px-3 py-1 bg-dark-700 rounded-full text-xs text-gray-300">Musik</span>
+                        <span class="px-3 py-1 bg-dark-700 rounded-full text-xs text-gray-300">Organisasi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Experience Section -->
+    <section id="experience" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal">
+                <span class="text-accent-glow font-space text-sm tracking-widest uppercase">Pengalaman Kerja</span>
+                <h2 class="text-4xl md:text-5xl font-space font-bold mt-4 mb-16">
+                    Perjalanan <span class="gradient-text">Karir</span>
+                </h2>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Timeline -->
+                <div class="space-y-12">
+                    <div class="timeline-item reveal">
+                        <div class="glass rounded-2xl p-6 ml-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-accent-glow text-sm font-medium">Apr 2022 - Jul 2023</span>
+                                <span class="px-3 py-1 bg-accent-primary/20 text-accent-glow text-xs rounded-full">Full-time</span>
+                            </div>
+                            <h3 class="text-xl font-space font-semibold mb-2">Store Manager</h3>
+                            <p class="text-gray-500 text-sm mb-4">Goodcell</p>
+                            <ul class="space-y-2 text-gray-400 text-sm">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-accent-glow mt-0.5 flex-shrink-0"></i>
+                                    Mengelola operasional toko secara keseluruhan
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-accent-glow mt-0.5 flex-shrink-0"></i>
+                                    Memimpin dan evaluasi kinerja staf
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-accent-glow mt-0.5 flex-shrink-0"></i>
+                                    Menyusun strategi penjualan dan pemasaran
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-accent-glow mt-0.5 flex-shrink-0"></i>
+                                    Menangani pelayanan pelanggan dan laporan keuangan
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item reveal" style="transition-delay: 0.1s;">
+                        <div class="glass rounded-2xl p-6 ml-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-accent-glow text-sm font-medium">Agt - Okt 2024</span>
+                                <span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Contract</span>
+                            </div>
+                            <h3 class="text-xl font-space font-semibold mb-2">HR GA</h3>
+                            <p class="text-gray-500 text-sm mb-4">PT. Kalimantan Sawit Kusuma (KSK)</p>
+                            <ul class="space-y-2 text-gray-400 text-sm">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-accent-glow mt-0.5 flex-shrink-0"></i>
+                                    Rekrutmen dan seleksi karyawan
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-accent-glow mt-0.5 flex-shrink-0"></i>
+                                    Pengembangan dan evaluasi kinerja karyawan
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-accent-glow mt-0.5 flex-shrink-0"></i>
+                                    Kesejahteraan karyawan dan manajemen staf
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-12">
+                    <div class="timeline-item reveal" style="transition-delay: 0.2s;">
+                        <div class="glass rounded-2xl p-6 ml-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-accent-glow text-sm font-medium">Jan - Jun 2020</span>
+                                <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full">Full-time</span>
+                            </div>
+                            <h3 class="text-xl font-space font-semibold mb-2">General Affairs (GA)</h3>
+                            <p class="text-gray-500 text-sm mb-4">PT. Supernova Flexible Packaging</p>
+                            <ul class="space-y-2 text-gray-400 text-sm">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-accent-glow mt-0.5 flex-shrink-0"></i>
+                                    Pengadaan dan pengelolaan aset perusahaan
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-accent-glow mt-0.5 flex-shrink-0"></i>
+                                    Manajemen fasilitas dan hubungan vendor
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-accent-glow mt-0.5 flex-shrink-0"></i>
+                                    Administrasi umum perusahaan
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item reveal" style="transition-delay: 0.3s;">
+                        <div class="glass rounded-2xl p-6 ml-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-accent-glow text-sm font-medium">Internship</span>
+                                <span class="px-3 py-1 bg-orange-500/20 text-orange-400 text-xs rounded-full">Magang</span>
+                            </div>
+                            <h3 class="text-xl font-space font-semibold mb-2">Teknisi HVAC Engineering</h3>
+                            <p class="text-gray-500 text-sm mb-4">Magang</p>
+                            <ul class="space-y-2 text-gray-400 text-sm">
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-accent-glow mt-0.5 flex-shrink-0"></i>
+                                    Maintenance dan cleaning service unit AC
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-accent-glow mt-0.5 flex-shrink-0"></i>
+                                    Penggantian dan crosscheck unit
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-accent-glow mt-0.5 flex-shrink-0"></i>
+                                    Memastikan AC dalam kondisi optimal
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal">
+                <span class="text-accent-glow font-space text-sm tracking-widest uppercase">Keahlian</span>
+                <h2 class="text-4xl md:text-5xl font-space font-bold mt-4 mb-16">
+                    <span class="gradient-text">Keterampilan</span> & Kompetensi
+                </h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Skill Item -->
+                <div class="reveal glass rounded-2xl p-8 group hover:border-accent-primary/30 transition-all">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 icon-container rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i data-lucide="users" class="w-8 h-8 text-accent-glow"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-space font-semibold">Kepemimpinan Humanistik</h3>
+                            <span class="text-accent-glow text-sm">Expert</span>
+                        </div>
+                    </div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="--progress: 95%;"></div>
+                    </div>
+                </div>
+                
+                <div class="reveal glass rounded-2xl p-8 group hover:border-accent-primary/30 transition-all" style="transition-delay: 0.1s;">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 icon-container rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i data-lucide="ear" class="w-8 h-8 text-pink-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-space font-semibold">Emphatic Listening</h3>
+                            <span class="text-pink-400 text-sm">Expert</span>
+                        </div>
+                    </div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="--progress: 90%; background: linear-gradient(90deg, #ec4899, #f43f5e);"></div>
+                    </div>
+                </div>
+                
+                <div class="reveal glass rounded-2xl p-8 group hover:border-accent-primary/30 transition-all" style="transition-delay: 0.2s;">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 icon-container rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i data-lucide="badge" class="w-8 h-8 text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-space font-semibold">SDM Manajemen</h3>
+                            <span class="text-blue-400 text-sm">Advanced</span>
+                        </div>
+                    </div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="--progress: 88%; background: linear-gradient(90deg, #3b82f6, #06b6d4);"></div>
+                    </div>
+                </div>
+                
+                <div class="reveal glass rounded-2xl p-8 group hover:border-accent-primary/30 transition-all" style="transition-delay: 0.3s;">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 icon-container rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i data-lucide="store" class="w-8 h-8 text-green-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-space font-semibold">Manajemen Operasional</h3>
+                            <span class="text-green-400 text-sm">Advanced</span>
+                        </div>
+                    </div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="--progress: 85%; background: linear-gradient(90deg, #22c55e, #10b981);"></div>
+                    </div>
+                </div>
+                
+                <div class="reveal glass rounded-2xl p-8 group hover:border-accent-primary/30 transition-all" style="transition-delay: 0.4s;">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 icon-container rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i data-lucide="trending-up" class="w-8 h-8 text-orange-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-space font-semibold">Administrasi Bisnis</h3>
+                            <span class="text-orange-400 text-sm">Advanced</span>
+                        </div>
+                    </div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="--progress: 82%; background: linear-gradient(90deg, #f97316, #f59e0b);"></div>
+                    </div>
+                </div>
+                
+                <div class="reveal glass rounded-2xl p-8 group hover:border-accent-primary/30 transition-all" style="transition-delay: 0.5s;">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 icon-container rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i data-lucide="wrench" class="w-8 h-8 text-purple-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-space font-semibold">HVAC Technical</h3>
+                            <span class="text-purple-400 text-sm">Intermediate</span>
+                        </div>
+                    </div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="--progress: 75%; background: linear-gradient(90deg, #a855f7, #8b5cf6);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Organization Section -->
+    <section id="organization" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal">
+                <span class="text-accent-glow font-space text-sm tracking-widest uppercase">Organisasi & Kepemimpinan</span>
+                <h2 class="text-4xl md:text-5xl font-space font-bold mt-4 mb-16">
+                    Pengalaman <span class="gradient-text">Berorganisasi</span>
+                </h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Organization Item -->
+                <div class="reveal glass rounded-2xl p-8 border-l-4 border-accent-primary hover:bg-dark-700/50 transition-all">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 icon-container rounded-xl flex items-center justify-center">
+                            <i data-lucide="crown" class="w-6 h-6 text-accent-glow"></i>
+                        </div>
+                        <span class="text-accent-glow text-sm">2018 - 2019</span>
+                    </div>
+                    <h3 class="text-xl font-space font-semibold mb-2">Ketua MPK</h3>
+                    <p class="text-gray-400 text-sm">Majelis Permusyawaratan Kelas SMAN 1 Cikulur</p>
+                </div>
+                
+                <div class="reveal glass rounded-2xl p-8 border-l-4 border-pink-500 hover:bg-dark-700/50 transition-all" style="transition-delay: 0.1s;">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 icon-container rounded-xl flex items-center justify-center">
+                            <i data-lucide="palette" class="w-6 h-6 text-pink-400"></i>
+                        </div>
+                        <span class="text-pink-400 text-sm">2018 - 2019</span>
+                    </div>
+                    <h3 class="text-xl font-space font-semibold mb-2">Wakil Ketua Seni</h3>
+                    <p class="text-gray-400 text-sm">SMAN 1 Cikulur</p>
+                </div>
+                
+                <div class="reveal glass rounded-2xl p-8 border-l-4 border-blue-500 hover:bg-dark-700/50 transition-all" style="transition-delay: 0.2s;">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 icon-container rounded-xl flex items-center justify-center">
+                            <i data-lucide="music" class="w-6 h-6 text-blue-400"></i>
+                        </div>
+                        <span class="text-blue-400 text-sm">2017 - 2020</span>
+                    </div>
+                    <h3 class="text-xl font-space font-semibold mb-2">Pembina Band</h3>
+                    <p class="text-gray-400 text-sm">SMAN 1 Cikulur</p>
+                </div>
+                
+                <div class="reveal glass rounded-2xl p-8 border-l-4 border-green-500 hover:bg-dark-700/50 transition-all" style="transition-delay: 0.3s;">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 icon-container rounded-xl flex items-center justify-center">
+                            <i data-lucide="users" class="w-6 h-6 text-green-400"></i>
+                        </div>
+                        <span class="text-green-400 text-sm">2019</span>
+                    </div>
+                    <h3 class="text-xl font-space font-semibold mb-2">Pendiri</h3>
+                    <p class="text-gray-400 text-sm">Music Student Community SMAN 1 Cikulur</p>
+                </div>
+                
+                <div class="reveal glass rounded-2xl p-8 border-l-4 border-orange-500 hover:bg-dark-700/50 transition-all" style="transition-delay: 0.4s;">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 icon-container rounded-xl flex items-center justify-center">
+                            <i data-lucide="graduation-cap" class="w-6 h-6 text-orange-400"></i>
+                        </div>
+                        <span class="text-orange-400 text-sm">2023 - 2025</span>
+                    </div>
+                    <h3 class="text-xl font-space font-semibold mb-2">Pengurus Komisariat PMII Mahbub Junaidi</h3>
+                    <p class="text-gray-400 text-sm">Bidang Kaderisasi (2023-2024) • Bidang Pemberdayaan Potensi dan Minat Bakat (2024-2025)</p>
+                </div>
+                
+                <div class="reveal glass rounded-2xl p-8 border-l-4 border-purple-500 hover:bg-dark-700/50 transition-all" style="transition-delay: 0.5s;">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 icon-container rounded-xl flex items-center justify-center">
+                            <i data-lucide="building" class="w-6 h-6 text-purple-400"></i>
+                        </div>
+                        <span class="text-purple-400 text-sm">2025 - 2026</span>
+                    </div>
+                    <h3 class="text-xl font-space font-semibold mb-2">Ketua 3 IMALA</h3>
+                    <p class="text-gray-400 text-sm">Pengurus Pusat Ikatan Mahasiswa Lebak - Bidang Penelitian, Evaluasi dan Pengembangan Organisasi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal text-center mb-16">
+                <span class="text-accent-glow font-space text-sm tracking-widest uppercase">Kontak</span>
+                <h2 class="text-4xl md:text-5xl font-space font-bold mt-4">
+                    Mari <span class="gradient-text">Terhubung</span>
+                </h2>
+                <p class="text-gray-400 mt-4 max-w-lg mx-auto">
+                    Tertarik untuk berkolaborasi atau memiliki pertanyaan? Jangan ragu untuk menghubungi saya.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <!-- Email -->
+                <a href="mailto:azeiz1820@gmail.com" class="reveal glass rounded-2xl p-8 text-center group hover:border-accent-primary/30 transition-all">
+                    <div class="w-16 h-16 mx-auto icon-container rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="mail" class="w-8 h-8 text-accent-glow"></i>
+                    </div>
+                    <h3 class="text-xl font-space font-semibold mb-2">Email</h3>
+                    <p class="text-gray-400 text-sm break-all">azeiz1820@gmail.com</p>
+                </a>
+                
+                <!-- Phone -->
+                <a href="tel:+6287777591707" class="reveal glass rounded-2xl p-8 text-center group hover:border-accent-primary/30 transition-all" style="transition-delay: 0.1s;">
+                    <div class="w-16 h-16 mx-auto icon-container rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="phone" class="w-8 h-8 text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-space font-semibold mb-2">Telepon</h3>
+                    <p class="text-gray-400 text-sm">+62 877 7759 1707</p>
+                </a>
+                
+                <!-- Location -->
+                <div class="reveal glass rounded-2xl p-8 text-center group hover:border-accent-primary/30 transition-all" style="transition-delay: 0.2s;">
+                    <div class="w-16 h-16 mx-auto icon-container rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="map-pin" class="w-8 h-8 text-orange-400"></i>
+                    </div>
+                    <h3 class="text-xl font-space font-semibold mb-2">Lokasi</h3>
+                    <p class="text-gray-400 text-sm">Rangkasbitung, Banten</p>
+                </div>
+            </div>
+            
+            <!-- CTA -->
+            <div class="reveal text-center mt-16">
+                <a href="mailto:azeiz1820@gmail.com" class="inline-flex items-center gap-3 bg-gradient-to-r from-accent-primary to-accent-secondary px-10 py-5 rounded-full font-semibold text-white text-lg transition-all hover:shadow-lg hover:shadow-accent-primary/30 hover:scale-105">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                    Kirim Pesan
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 border-t border-dark-600">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-4">
+                    <span class="text-2xl font-space font-bold gradient-text">Abdul Aziz</span>
+                    <span class="text-gray-500 text-sm">© 2025 Abdul Aziz. All rights reserved.</span>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <a href="mailto:azeiz1820@gmail.com" class="w-10 h-10 glass rounded-full flex items-center justify-center text-gray-400 hover:text-accent-glow transition-colors">
+                        <i data-lucide="mail" class="w-5 h-5"></i>
+                    </a>
+                    <a href="tel:+6287777591707" class="w-10 h-10 glass rounded-full flex items-center justify-center text-gray-400 hover:text-accent-glow transition-colors">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 glass rounded-full flex items-center justify-center text-gray-400 hover:text-accent-glow transition-colors">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
+        function openMenu() {
+            mobileMenu.classList.add('open');
+            menuOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMenu() {
+            mobileMenu.classList.remove('open');
+            menuOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        
+        menuBtn.addEventListener('click', openMenu);
+        closeMenuBtn.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+        
+        // Reveal Animation on Scroll
+        const reveals = document.querySelectorAll('.reveal');
+        
+        function revealOnScroll() {
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // Initial check
+        
+        // Skill Progress Animation
+        const skillBars = document.querySelectorAll('.skill-progress-bar');
+        
+        function animateSkills() {
+            skillBars.forEach(bar => {
+                const windowHeight = window.innerHeight;
+                const elementTop = bar.getBoundingClientRect().top;
+                
+                if (elementTop < windowHeight - 100) {
+                    const progress = bar.style.getPropertyValue('--progress');
+                    bar.style.transform = `scaleX(${parseFloat(progress) / 100})`;
+                    bar.classList.add('animate');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', animateSkills);
+        animateSkills(); // Initial check
+        
+        // Active Navigation Link
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        function highlightNav() {
+            let scrollY = window.pageYOffset;
+            
+            sections.forEach(section => {
+                const sectionHeight = section.offsetHeight;
+                const sectionTop = section.offsetTop - 200;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === '#' + sectionId) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', highlightNav);
+        
+        // Smooth Scroll for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Parallax Effect for Floating Shapes
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const shapes = document.querySelectorAll('.floating-shape');
+            
+            shapes.forEach((shape, index) => {
+                const speed = 0.1 + (index * 0.05);
+                shape.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+        
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
